@@ -4,7 +4,7 @@ sensor:
     id: max_pv_voltage_today
     name: "Maximum PV voltage today"
     address: 0x3300
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_WORD
     accuracy_decimals: 1
     unit_of_measurement: "V"
@@ -16,7 +16,7 @@ sensor:
     id: min_pv_voltage_today
     name: "Minimum PV voltage today"
     address: 0x3301
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_WORD
     accuracy_decimals: 1
     unit_of_measurement: "V"
@@ -28,7 +28,7 @@ sensor:
     id: max_battery_voltage_today
     name: "Maximum battery voltage today"
     address: 0x3302
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_WORD
     accuracy_decimals: 1
     unit_of_measurement: "V"
@@ -40,7 +40,7 @@ sensor:
     id: min_battery_today
     name: "Minimum battery voltage today"
     address: 0x3303
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_WORD
     accuracy_decimals: 1
     unit_of_measurement: "V"
@@ -52,7 +52,7 @@ sensor:
     id: consumed_energy_today
     name: "Consumed energy today"
     address: 0x3304
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_DWORD_R
     accuracy_decimals: 0
     unit_of_measurement: "Wh"
@@ -64,7 +64,7 @@ sensor:
     id: consumed_energy_month
     name: "Consumed Energy Month"
     address: 0x3306
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_DWORD_R
     accuracy_decimals: 0
     unit_of_measurement: "Wh"
@@ -76,7 +76,7 @@ sensor:
     id: consumed_energy_year
     name: "Consumed energy year"
     address: 0x3308
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_DWORD_R
     accuracy_decimals: 1
     unit_of_measurement: "kWh"
@@ -88,7 +88,7 @@ sensor:
     id: consumed_energy_total
     name: "Consumed energy total"
     address: 0x330A
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_DWORD_R
     accuracy_decimals: 1
     unit_of_measurement: "kWh"
@@ -100,7 +100,7 @@ sensor:
     id: generated_energy_today
     name: "Generated energy today"
     address: 0x330C
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_DWORD_R
     accuracy_decimals: 0
     unit_of_measurement: "Wh"
@@ -117,7 +117,7 @@ sensor:
     id: generated_energy_month
     name: "Generated energy month"
     address: 0x330E
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_DWORD_R
     accuracy_decimals: 0
     unit_of_measurement: "Wh"
@@ -129,7 +129,7 @@ sensor:
     id: generated_energy_year
     name: "Generated energy year"
     address: 0x3310
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_DWORD_R
     accuracy_decimals: 1
     unit_of_measurement: "kWh"
@@ -141,7 +141,7 @@ sensor:
     id: generated_energy_total
     name: "Generated energy total"
     address: 0x3312
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_DWORD_R
     accuracy_decimals: 1
     filters:
@@ -152,19 +152,19 @@ sensor:
     id: co2_reduction
     name: "CO2 reduction"
     address: 0x3314
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_DWORD_R
     accuracy_decimals: 1
-    unit_of_measurement: "kg"
+    unit_of_measurement: kg
     filters:
-      - multiply: 1.0
+      - multiply: 10.0
 
   - platform: modbus_controller
     modbus_controller_id: epever
     id: battery_voltage
     name: "Battery voltage"
     address: 0x331A
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_WORD
     accuracy_decimals: 1
     unit_of_measurement: "V"
@@ -176,7 +176,7 @@ sensor:
     id: battery_current
     name: "Battery current"
     address: 0x331B
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: S_DWORD_R
     register_count: 2
     accuracy_decimals: 2

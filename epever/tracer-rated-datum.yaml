@@ -7,11 +7,12 @@ sensor:
     address: 0x3000
     skip_updates: 60
     unit_of_measurement: "V"
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_WORD
     accuracy_decimals: 1
     filters:
       - multiply: 0.01
+    lambda: !lambda "return x*2 ;"
 
   - platform: modbus_controller
     modbus_controller_id: epever
@@ -19,7 +20,7 @@ sensor:
     name: "array_rated_current"
     address: 0x3001
     unit_of_measurement: "A"
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_WORD
     accuracy_decimals: 2
     filters:
@@ -32,7 +33,7 @@ sensor:
     address: 0x3002
     register_count: 2
     unit_of_measurement: "W"
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_DWORD_R
     accuracy_decimals: 1
     filters:
@@ -44,7 +45,7 @@ sensor:
     name: "battery_rated_voltage"
     address: 0x3004
     unit_of_measurement: "V"
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_WORD
     accuracy_decimals: 1
     filters:
@@ -56,7 +57,7 @@ sensor:
     name: "battery_rated_current"
     address: 0x3005
     unit_of_measurement: "A"
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_WORD
     accuracy_decimals: 1
     filters:
@@ -68,7 +69,7 @@ sensor:
     name: "battery_rated_power"
     address: 0x3006
     unit_of_measurement: "W"
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_DWORD_R
     accuracy_decimals: 1
     filters:
@@ -80,7 +81,7 @@ sensor:
     name: "charging_mode"
     address: 0x3008
     unit_of_measurement: ""
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_WORD
     accuracy_decimals: 0
 
@@ -91,7 +92,7 @@ sensor:
     address: 0x300E
     skip_updates: 60
     unit_of_measurement: "A"
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_WORD
     accuracy_decimals: 1
     filters:

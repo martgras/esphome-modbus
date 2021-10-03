@@ -5,7 +5,7 @@ sensor:
     name: "PV array input voltage"
     address: 0x3100
     unit_of_measurement: "V" ## for any other unit the value is returned in minutes
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_WORD
     accuracy_decimals: 1
     filters:
@@ -17,7 +17,7 @@ sensor:
     name: "PV array input current"
     address: 0x3101
     unit_of_measurement: "A" ## for any other unit the value is returned in minutes
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_WORD
     accuracy_decimals: 2
     filters:
@@ -29,7 +29,7 @@ sensor:
     name: "PV array input power"
     address: 0x3102
     unit_of_measurement: "W" ## for any other unit the value is returned in minutes
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_DWORD_R
     accuracy_decimals: 1
     filters:
@@ -41,7 +41,7 @@ sensor:
     name: "Charging voltage"
     address: 0x3104
     unit_of_measurement: "V"
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_WORD
     accuracy_decimals: 1
     filters:
@@ -53,7 +53,7 @@ sensor:
     name: "Charging current"
     address: 0x3105
     unit_of_measurement: "A"
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_WORD
     accuracy_decimals: 1
     filters:
@@ -65,7 +65,7 @@ sensor:
     name: "Charging power"
     address: 0x3106
     unit_of_measurement: "W"
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_DWORD_R
     accuracy_decimals: 1
     filters:
@@ -77,7 +77,7 @@ sensor:
     name: "Load voltage"
     address: 0x310C
     unit_of_measurement: "V"
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_WORD
     accuracy_decimals: 1
     filters:
@@ -89,7 +89,7 @@ sensor:
     name: "Load Current"
     address: 0x310D
     unit_of_measurement: "A"
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_WORD
     accuracy_decimals: 2
     filters:
@@ -101,7 +101,7 @@ sensor:
     name: "Load power"
     address: 0x310E
     unit_of_measurement: "W"
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_DWORD_R
     accuracy_decimals: 1
     filters:
@@ -113,7 +113,7 @@ sensor:
     name: "Battery temperature"
     address: 0x3110
     unit_of_measurement: °C
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_WORD
     accuracy_decimals: 1
     filters:
@@ -125,7 +125,7 @@ sensor:
     name: "Device temperature"
     address: 0x3111
     unit_of_measurement: °C
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_WORD
     accuracy_decimals: 1
     filters:
@@ -137,7 +137,7 @@ sensor:
     name: "Power components temperature"
     address: 0x3112
     unit_of_measurement: °C
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_WORD
     accuracy_decimals: 1
     filters:
@@ -149,7 +149,7 @@ sensor:
     name: "Battery SOC"
     address: 0x311A
     unit_of_measurement: "%"
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_WORD
     accuracy_decimals: 0
 
@@ -159,7 +159,7 @@ sensor:
     name: "Remote battery temperature"
     address: 0x311B
     unit_of_measurement: °C
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_WORD
     accuracy_decimals: 1
     filters:
@@ -169,8 +169,8 @@ sensor:
     id: battery_volt_settings
     name: "Remote real voltage"
     address: 0x311D
-    unit_of_measurement: "°C"
-    modbus_functioncode: "read_input_registers"
+    unit_of_measurement: V
+    register_type: read
     value_type: U_WORD
     accuracy_decimals: 1
     filters:
@@ -182,7 +182,7 @@ sensor:
     id: Battery_status_volt
     name: "Battery status voltage"
     address: 0x3200
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_WORD
     bitmask: 7  #(Bits 0-3)
     accuracy_decimals: 0
@@ -192,7 +192,7 @@ sensor:
     id: Battery_status_temp
     name: "Battery status temeratur"
     address: 0x3200
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_WORD
     bitmask: 0x38  #(Bits 4-7)
     accuracy_decimals: 0
@@ -202,6 +202,6 @@ sensor:
     id: Charger_status
     name: "Charger status"
     address: 0x3201
-    modbus_functioncode: "read_input_registers"
+    register_type: read
     value_type: U_WORD
     accuracy_decimals: 0

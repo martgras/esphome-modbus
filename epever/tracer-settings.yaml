@@ -4,7 +4,7 @@ sensor:
     id: battery_type
     address: 0x9000
     name: "Battery Type"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     value_type: U_WORD
     skip_updates: 50
 
@@ -13,7 +13,7 @@ sensor:
     id: battery_capacity
     address: 0x9001
     name: "Battery Capacity"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     value_type: U_WORD
 
   - platform: modbus_controller
@@ -22,7 +22,7 @@ sensor:
     address: 0x9002
     name: "Temperature compensation coefficient"
     unit_of_measurement: "mV/°C/2V"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     value_type: U_WORD
     filters:
       - multiply: 0.01
@@ -33,7 +33,7 @@ sensor:
     address: 0x9003
     name: "High Voltage disconnect"
     unit_of_measurement: "V"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     value_type: U_WORD
     filters:
       - multiply: 0.01
@@ -44,7 +44,7 @@ sensor:
     address: 0x9004
     name: "Charging limit voltage"
     unit_of_measurement: "V"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     value_type: U_WORD
     filters:
       - multiply: 0.01
@@ -55,7 +55,7 @@ sensor:
     address: 0x9005
     name: "Over voltage reconnect"
     unit_of_measurement: "V"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     value_type: U_WORD
     filters:
       - multiply: 0.01
@@ -66,7 +66,7 @@ sensor:
     address: 0x9006
     name: "Equalization voltage"
     unit_of_measurement: "V"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     value_type: U_WORD
     filters:
       - multiply: 0.01
@@ -77,7 +77,7 @@ sensor:
     address: 0x9007
     name: "Boost voltage"
     unit_of_measurement: "V"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     value_type: U_WORD
     filters:
       - multiply: 0.01
@@ -88,7 +88,7 @@ sensor:
     address: 0x9008
     name: "Float voltage"
     unit_of_measurement: "V"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     value_type: U_WORD
     filters:
       - multiply: 0.01
@@ -99,7 +99,7 @@ sensor:
     address: 0x9009
     name: "Boost reconnect voltage"
     unit_of_measurement: "V"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     value_type: U_WORD
     filters:
       - multiply: 0.01
@@ -110,7 +110,7 @@ sensor:
     address: 0x900A
     name: "Low voltage reconnect"
     unit_of_measurement: "V"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     value_type: U_WORD
     filters:
       - multiply: 0.01
@@ -121,7 +121,7 @@ sensor:
     address: 0x900B
     name: "Under voltage recover"
     unit_of_measurement: "V"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     value_type: U_WORD
     filters:
       - multiply: 0.01
@@ -132,7 +132,7 @@ sensor:
     address: 0x900C
     name: "Under voltage warning"
     unit_of_measurement: "V"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     value_type: U_WORD
     filters:
       - multiply: 0.01
@@ -143,7 +143,7 @@ sensor:
     address: 0x900D
     name: "Low voltage disconnect"
     unit_of_measurement: "V"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     value_type: U_WORD
     filters:
       - multiply: 0.01
@@ -154,7 +154,7 @@ sensor:
     address: 0x900E
     name: "Discharging limit voltage"
     unit_of_measurement: "V"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     value_type: U_WORD
     filters:
       - multiply: 0.01
@@ -165,7 +165,7 @@ sensor:
     address: 0x9017
     name: "Battery temperature warning upper limit"
     unit_of_measurement: "°C"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     value_type: U_WORD
     # new range add 'skip_updates' again
     skip_updates: 50
@@ -178,7 +178,7 @@ sensor:
     address: 0x9018
     name: "Battery temperature warning lower limit"
     unit_of_measurement: "°C"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     value_type: U_WORD
     filters:
       - multiply: 0.01
@@ -189,7 +189,7 @@ sensor:
     address: 0x9019
     name: "Controller inner temperature upper limit"
     unit_of_measurement: "°C"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     value_type: U_WORD
     filters:
       - multiply: 0.01
@@ -200,7 +200,7 @@ sensor:
     address: 0x901A
     name: "Controller inner temperature upper limit recover"
     unit_of_measurement: "°C"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     value_type: U_WORD
     filters:
       - multiply: 0.01
@@ -211,7 +211,7 @@ sensor:
     address: 0x901B
     name: "Power component temperature upper limit"
     unit_of_measurement: "°C"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     value_type: U_WORD
     filters:
       - multiply: 0.01
@@ -222,7 +222,7 @@ sensor:
     address: 0x901C
     name: "Power component temperature upper limit recover"
     unit_of_measurement: "°C"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     value_type: U_WORD
     filters:
       - multiply: 0.01
@@ -233,7 +233,7 @@ sensor:
     address: 0x901D
     name: "Line Impedance"
     unit_of_measurement: "mOhm"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     value_type: U_WORD
     filters:
       - multiply: 0.01
@@ -244,7 +244,7 @@ sensor:
     address: 0x901E
     name: "Day Time Threshold Voltage"
     unit_of_measurement: "V"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     value_type: U_WORD
     filters:
       - multiply: 0.01
@@ -255,7 +255,7 @@ sensor:
     address: 0x901F
     name: "Light signal startup delay time"
     unit_of_measurement: "mins"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     value_type: U_WORD
     filters:
       - multiply: 0.01
@@ -266,7 +266,7 @@ sensor:
     address: 0x9020
     name: "Light Time Threshold Voltage"
     unit_of_measurement: "mins"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     value_type: U_WORD
     filters:
       - multiply: 0.01
@@ -277,7 +277,7 @@ sensor:
     address: 0x9021
     name: "Light signal close delay time"
     unit_of_measurement: "mins"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     value_type: U_WORD
     filters:
       - multiply: 0.01
@@ -292,7 +292,7 @@ sensor:
       # 0003H Time Control
     address: 0x903D
     name: "Load controlling modes"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     accuracy_decimals: 0
     value_type: U_WORD
     skip_updates: 50
@@ -304,7 +304,7 @@ sensor:
     # D15-D8,hour, D7-D0, minute
     address: 0x903E
     name: "Working_time length 1"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     accuracy_decimals: 0
     value_type: U_WORD
 
@@ -313,7 +313,7 @@ sensor:
     id: working_time_length_2
     address: 0x903F
     name: "Working_time length 1"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     accuracy_decimals: 0
     value_type: U_WORD
 
@@ -322,7 +322,7 @@ sensor:
     id: turn_on_timing_1_seconds
     address: 0x9042
     name: "Turn on timing 1 seconds"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     accuracy_decimals: 0
     value_type: U_WORD
     skip_updates: 50
@@ -332,7 +332,7 @@ sensor:
     id: turn_on_timing_1_minutes
     address: 0x9043
     name: "Turn on timing 1 minutes"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     accuracy_decimals: 0
     value_type: U_WORD
 
@@ -341,7 +341,7 @@ sensor:
     id: turn_on_timing_1_hours
     address: 0x9044
     name: "Turn on timing 1 hours"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     accuracy_decimals: 0
     value_type: U_WORD
 
@@ -350,7 +350,7 @@ sensor:
     id: turn_off_timing_1_seconds
     address: 0x9045
     name: "Turn off timing 1 seconds"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     accuracy_decimals: 0
     value_type: U_WORD
 
@@ -359,7 +359,7 @@ sensor:
     id: turn_off_timing_1_minutes
     address: 0x9046
     name: "Turn off timing 1 minutes"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     accuracy_decimals: 0
     value_type: U_WORD
 
@@ -368,7 +368,7 @@ sensor:
     id: turn_off_timing_1_hours
     address: 0x9047
     name: "Turn off timing 1 hours"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     accuracy_decimals: 0
     value_type: U_WORD
 
@@ -377,7 +377,7 @@ sensor:
     id: turn_on_timing_2_seconds
     address: 0x9048
     name: "Turn on timing 2 seconds"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     accuracy_decimals: 0
     value_type: U_WORD
 
@@ -386,7 +386,7 @@ sensor:
     id: turn_on_timing_2_minutes
     address: 0x9049
     name: "Turn on timing 2 minutes"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     accuracy_decimals: 0
     value_type: U_WORD
 
@@ -395,7 +395,7 @@ sensor:
     id: turn_on_timing_2_hours
     address: 0x904A
     name: "Turn on timing 2 hours"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     accuracy_decimals: 0
     value_type: U_WORD
 
@@ -404,7 +404,7 @@ sensor:
     id: turn_off_timing_2_seconds
     address: 0x904B
     name: "Turn off timing 2 seconds"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     accuracy_decimals: 0
     value_type: U_WORD
 
@@ -413,7 +413,7 @@ sensor:
     id: turn_off_timing_2_minutes
     address: 0x904C
     name: "Turn off timing 2 minutes"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     accuracy_decimals: 0
     value_type: U_WORD
 
@@ -422,7 +422,7 @@ sensor:
     id: turn_off_timing_2_hours
     address: 0x904D
     name: "Turn off timing 2 hours"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     accuracy_decimals: 0
     value_type: U_WORD
 
@@ -431,7 +431,7 @@ sensor:
     id: backlight_time
     address: 0x9063
     name: "Backlight time"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     accuracy_decimals: 0
     unit_of_measurement: "s"
     value_type: U_WORD
@@ -444,7 +444,7 @@ sensor:
     bitmask: 0xFF
     unit_of_measurement: "m"
     name: "Length of night-mins"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     value_type: U_WORD
 
   - platform: modbus_controller
@@ -454,7 +454,7 @@ sensor:
     bitmask: 0xFF00
     unit_of_measurement: "m"
     name: "Length of night"
-    modbus_functioncode: read_holding_registers
+    register_type: holding
     value_type: U_WORD
     skip_updates: 50
     filters:
