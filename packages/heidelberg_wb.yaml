@@ -1,0 +1,226 @@
+substitutions:
+  modbus_controller_name: heidelberg_wb
+
+uart:
+  id: uart_${modbus_controller_name}
+  baud_rate: 19200
+  stop_bits: 1
+  parity: even
+
+modbus:
+  id: mod_bus_${modbus_controller_name}
+  send_wait_time: 200ms
+
+modbus_controller:
+  - id: ${modbus_controller_name}
+    address: 0x1
+    modbus_id: mod_bus_${modbus_controller_name}
+    command_throttle: 200ms
+    setup_priority: -10
+
+sensor:
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_name}
+    id: version
+    name: "Version"
+    address: 0x0004
+    register_type: read
+    value_type: U_WORD
+
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_name}
+    id: charg_state
+    name: "charging state"
+    address: 0x0005
+    register_type: read
+    value_type: U_WORD
+
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_name}
+    id: l1_a_rms
+    name: "L1 A rms"
+    address: 0x0006
+    unit_of_measurement: "A rms"
+    register_type: read
+    value_type: U_WORD
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_name}
+    id: l2_a_rms
+    name: "L2 A rms"
+    address: 0x0007
+    unit_of_measurement: "A rms"
+    register_type: read
+    value_type: U_WORD
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_name}
+    id: l3_a_rms
+    name: "L3 A rms"
+    address: 0x0008
+    unit_of_measurement: "A rms"
+    register_type: read
+    value_type: U_WORD
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_name}
+    id: pcb_temp
+    name: "PCB-Temperatur"
+    address: 0x0009
+    unit_of_measurement: "°C"
+    register_type: read
+    value_type: S_WORD
+    skip_updates: 255
+    accuracy_decimals: 1
+    filters:
+      - multiply: 0.1
+
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_name}
+    id: l1_v_rms
+    name: "L1 V rms"
+    address: 0x000A
+    unit_of_measurement: "V rms"
+    register_type: read
+    value_type: U_WORD
+    skip_updates: 60
+    accuracy_decimals: 0
+
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_name}
+    id: l2_v_rms
+    name: "L2 V rms"
+    address: 0x000B
+    unit_of_measurement: "V rms"
+    register_type: read
+    value_type: U_WORD
+    skip_updates: 60
+    accuracy_decimals: 0
+
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_name}
+    id: l3_v_rms
+    name: "L3 V rms"
+    address: 0x000C
+    unit_of_measurement: "V rms"
+    register_type: read
+    value_type: U_WORD
+    skip_updates: 60
+    accuracy_decimals: 0
+
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_name}
+    id: extern_lock_state
+    name: "extern lock state"
+    address: 0x000D
+    register_type: read
+    value_type: U_WORD
+
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_name}
+    id: l1_l2_l3_power
+    name: "L1 L2 L3 Power"
+    address: 0x000E
+    unit_of_measurement: "kW"
+    register_type: read
+    value_type: U_WORD
+    accuracy_decimals: 2
+    filters:
+      - multiply: 0.001
+
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_name}
+    id: kwh_power_on
+    name: "KWH Power On"
+    address: 0x000F
+    unit_of_measurement: "kWh"
+    register_type: read
+    value_type: U_DWORD
+    accuracy_decimals: 3
+    filters:
+      - multiply: 0.001
+
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_name}
+    id: kwh_total
+    name: "KWH Total"
+    address: 0x0011
+    unit_of_measurement: "kWh"
+    register_type: read
+    value_type: U_DWORD
+    accuracy_decimals: 3
+    filters:
+      - multiply: 0.001
+
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_name}
+    id: fix_max_current
+    name: "fix max current"
+    address: 0x0064
+    unit_of_measurement: "A"
+    register_type: read
+    value_type: U_WORD
+    accuracy_decimals: 0
+
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_name}
+    id: fix_min_current
+    name: "fix min current"
+    address: 0x0065
+    unit_of_measurement: "A"
+    register_type: read
+    value_type: U_WORD
+    accuracy_decimals: 0
+
+binary_sensor:
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_name}
+    id: stand_by_control
+    name: "stand by control"
+    address: 0x0102
+    register_type: holding
+
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_name}
+    id: remote_lock
+    name: "remote_lock"
+    address: 0x0103
+    register_type: holding
+
+
+number:
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_name}
+    id: watchdog
+    name: "watchdog"
+    address: 0x0101
+    value_type: U_WORD
+    lambda: "return  x * 0.1; "
+    write_lambda: "return x * 10.0;"
+
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_name}
+    id: max_current
+    name: "max current"
+    address: 0x0105
+    value_type: U_WORD
+    lambda: "return  x * 0.1; "
+    write_lambda: "return x * 10.0;"
+
+  - platform: modbus_controller
+    modbus_controller_id: ${modbus_controller_name}
+    id: failsafe_current
+    name: "failsafe current"
+    address: 0x0106
+    value_type: U_WORD
+    lambda: "return  x * 0.1; "
+    write_lambda: "return x * 10.0;"
