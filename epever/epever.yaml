@@ -249,16 +249,5 @@ text_sensor:
     name: "RTC Time Sensor"
     id: template_rtc
 
-  - platform: modbus_controller
-    modbus_controller_id: epever
-    name: "rtc clock test 2"
-    id: rtc_clock_test2
-    internal: true
-    modbus_functioncode: read_holding_registers
-    address: 0x9013
-    register_count: 3
-    raw_encode: HEXBYTES
-    response_size: 6
-
 web_server:
   port: 80
