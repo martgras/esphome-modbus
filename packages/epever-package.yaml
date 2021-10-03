@@ -1,5 +1,5 @@
 substitutions:
-  modbus_controller_id: ${modbus_controller_id}
+  modbus_controller_name: epever
 
 esphome:
   on_boot:
@@ -17,7 +17,7 @@ esphome:
           int day = time_info->tm_mday;
           int month = time_info->tm_mon + 1;
           int year = time_info->tm_year % 100;
-          esphome::modbus_controller::ModbusController *controller = id(epever);
+          esphome::modbus_controller::ModbusController *controller = id( ${modbus_controller_name});
           // if there is no internet connection localtime returns year 70
           if (year != 70) {
             // create the payload
@@ -27,7 +27,7 @@ esphome:
             esphome::modbus_controller::ModbusCommandItem set_rtc_command =
                 esphome::modbus_controller::ModbusCommandItem::create_write_multiple_command(controller, 0x9013, 3, rtc_data);
             // Submit the command to the send queue
-            epever->queue_command(set_rtc_command);
+            controller->queue_command(set_rtc_command);
             ESP_LOGI("ModbusLambda", "EPSOLAR RTC set to %02d:%02d:%02d %02d.%02d.%04d", hour, minutes, seconds, day, month,
                     year + 2000);
           }
@@ -75,23 +75,23 @@ esphome:
           ESP_LOGI("ModbusLambda", "EPSOLAR Battery set");
 
 uart:
-  id: uart_${modbus_controller_id}
+  id: uart_${modbus_controller_name}
   baud_rate: 115200
   stop_bits: 1
 
 modbus:
-  id: mod_bus_${modbus_controller_id}
-  uart_id: uart_${modbus_controller_id}
+  id: mod_bus_${modbus_controller_name}
+  uart_id: uart_${modbus_controller_name}
 
 modbus_controller:
-  - id: ${modbus_controller_id}
+  - id: ${modbus_controller_name}
     ## the Modbus device addr
-    modbus_id: mod_bus_${modbus_controller_id}
+    modbus_id: mod_bus_${modbus_controller_name}
     setup_priority: -10
 
 sensor:
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: array_rated_voltage
     name: "array_rated_voltage"
     address: 0x3000
@@ -105,7 +105,7 @@ sensor:
     lambda: !lambda "return x*2 ;"
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: array_rated_current
     name: "array_rated_current"
     address: 0x3001
@@ -117,7 +117,7 @@ sensor:
       - multiply: 0.01
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: array_rated_power
     name: "array_rated_power"
     address: 0x3002
@@ -130,7 +130,7 @@ sensor:
       - multiply: 0.01
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: battery_rated_voltage
     name: "battery_rated_voltage"
     address: 0x3004
@@ -142,7 +142,7 @@ sensor:
       - multiply: 0.01
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: battery_rated_current
     name: "battery_rated_current"
     address: 0x3005
@@ -154,7 +154,7 @@ sensor:
       - multiply: 0.01
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: battery_rated_power
     name: "battery_rated_power"
     address: 0x3006
@@ -166,7 +166,7 @@ sensor:
       - multiply: 0.01
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: charging_mode
     name: "charging_mode"
     address: 0x3008
@@ -176,7 +176,7 @@ sensor:
     accuracy_decimals: 0
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: rated_current_of_load
     name: "rated_current_of_load"
     address: 0x300E
@@ -189,7 +189,7 @@ sensor:
       - multiply: 0.01
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: pv_input_voltage
     name: "PV array input voltage"
     address: 0x3100
@@ -201,7 +201,7 @@ sensor:
       - multiply: 0.01
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: pv_input_current
     name: "PV array input current"
     address: 0x3101
@@ -213,7 +213,7 @@ sensor:
       - multiply: 0.01
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: pv_input_power
     name: "PV array input power"
     address: 0x3102
@@ -225,7 +225,7 @@ sensor:
       - multiply: 0.01
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: charging_voltage
     name: "Charging voltage"
     address: 0x3104
@@ -237,7 +237,7 @@ sensor:
       - multiply: 0.01
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: charging_current
     name: "Charging current"
     address: 0x3105
@@ -249,7 +249,7 @@ sensor:
       - multiply: 0.01
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: charging_power
     name: "Charging power"
     address: 0x3106
@@ -261,7 +261,7 @@ sensor:
       - multiply: 0.01
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: load_voltage
     name: "Load voltage"
     address: 0x310C
@@ -273,7 +273,7 @@ sensor:
       - multiply: 0.01
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: load_current
     name: "Load Current"
     address: 0x310D
@@ -285,7 +285,7 @@ sensor:
       - multiply: 0.01
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: load_power
     name: "Load power"
     address: 0x310E
@@ -297,7 +297,7 @@ sensor:
       - multiply: 0.01
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: battery_temperature
     name: "Battery temperature"
     address: 0x3110
@@ -309,7 +309,7 @@ sensor:
       - multiply: 0.01
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: device_temperature
     name: "Device temperature"
     address: 0x3111
@@ -321,7 +321,7 @@ sensor:
       - multiply: 0.01
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: power_components_temperature
     name: "Power components temperature"
     address: 0x3112
@@ -333,7 +333,7 @@ sensor:
       - multiply: 0.01
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: battery_soc
     name: "Battery SOC"
     address: 0x311A
@@ -343,7 +343,7 @@ sensor:
     accuracy_decimals: 0
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: remote_battery_temperature
     name: "Remote battery temperature"
     address: 0x311B
@@ -354,7 +354,7 @@ sensor:
     filters:
       - multiply: 0.01
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: battery_volt_settings
     name: "Remote real voltage"
     address: 0x311D
@@ -366,7 +366,7 @@ sensor:
       - multiply: 0.01
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: Battery_status_volt
     name: "Battery status voltage"
     address: 0x3200
@@ -376,7 +376,7 @@ sensor:
     accuracy_decimals: 0
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: Battery_status_temp
     name: "Battery status temeratur"
     address: 0x3200
@@ -386,7 +386,7 @@ sensor:
     accuracy_decimals: 0
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: Charger_status
     name: "Charger status"
     address: 0x3201
@@ -395,7 +395,7 @@ sensor:
     accuracy_decimals: 0
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: max_pv_voltage_today
     name: "Maximum PV voltage today"
     address: 0x3300
@@ -407,7 +407,7 @@ sensor:
       - multiply: 0.01
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: min_pv_voltage_today
     name: "Minimum PV voltage today"
     address: 0x3301
@@ -419,7 +419,7 @@ sensor:
       - multiply: 0.01
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: max_battery_voltage_today
     name: "Maximum battery voltage today"
     address: 0x3302
@@ -431,7 +431,7 @@ sensor:
       - multiply: 0.01
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: min_battery_today
     name: "Minimum battery voltage today"
     address: 0x3303
@@ -443,7 +443,7 @@ sensor:
       - multiply: 0.01
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: consumed_energy_today
     name: "Consumed energy today"
     address: 0x3304
@@ -455,7 +455,7 @@ sensor:
       - multiply: 10.0
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: consumed_energy_month
     name: "Consumed Energy Month"
     address: 0x3306
@@ -467,7 +467,7 @@ sensor:
       - multiply: 10.0
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: consumed_energy_year
     name: "Consumed energy year"
     address: 0x3308
@@ -479,7 +479,7 @@ sensor:
       - multiply: 0.01
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: consumed_energy_total
     name: "Consumed energy total"
     address: 0x330A
@@ -491,7 +491,7 @@ sensor:
       - multiply: 0.01
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: generated_energy_today
     name: "Generated energy today"
     address: 0x330C
@@ -503,7 +503,7 @@ sensor:
       - multiply: 10.0
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: generated_energy_month
     name: "Generated energy month"
     address: 0x330E
@@ -515,7 +515,7 @@ sensor:
       - multiply: 10.0
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: generated_energy_year
     name: "Generated energy year"
     address: 0x3310
@@ -527,7 +527,7 @@ sensor:
       - multiply: 0.01
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: generated_energy_total
     name: "Generated energy total"
     address: 0x3312
@@ -538,7 +538,7 @@ sensor:
       - multiply: 0.01
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: co2_reduction
     name: "CO2 reduction"
     address: 0x3314
@@ -550,7 +550,7 @@ sensor:
       - multiply: 10.0
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: battery_voltage
     name: "Battery voltage"
     address: 0x331A
@@ -562,7 +562,7 @@ sensor:
       - multiply: 0.01
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: battery_current
     name: "Battery current"
     address: 0x331B
@@ -576,7 +576,7 @@ sensor:
 
 # Remove to keep stack size limit unitl a 32 kb loop size solve the issue
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: battery_type
 #    address: 0x9000
 #    name: "Battery Type"
@@ -585,7 +585,7 @@ sensor:
 #    skip_updates: 50
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: battery_capacity
 #    address: 0x9001
 #    name: "Battery Capacity"
@@ -593,7 +593,7 @@ sensor:
 #    value_type: U_WORD
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: temperature_compensation_coefficient
 #    address: 0x9002
 #    name: "Temperature compensation coefficient"
@@ -604,7 +604,7 @@ sensor:
 #      - multiply: 0.01
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: high_voltage_disconnect
 #    address: 0x9003
 #    name: "High Voltage disconnect"
@@ -615,7 +615,7 @@ sensor:
 #      - multiply: 0.01
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: charging_limit_voltage
 #    address: 0x9004
 #    name: "Charging limit voltage"
@@ -626,7 +626,7 @@ sensor:
 #      - multiply: 0.01
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: over_voltage_reconnect
 #    address: 0x9005
 #    name: "Over voltage reconnect"
@@ -637,7 +637,7 @@ sensor:
 #      - multiply: 0.01
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: equalization_voltage
 #    address: 0x9006
 #    name: "Equalization voltage"
@@ -648,7 +648,7 @@ sensor:
 #      - multiply: 0.01
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: boost_voltage
 #    address: 0x9007
 #    name: "Boost voltage"
@@ -659,7 +659,7 @@ sensor:
 #      - multiply: 0.01
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: float_voltage
 #    address: 0x9008
 #    name: "Float voltage"
@@ -670,7 +670,7 @@ sensor:
 #      - multiply: 0.01
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: boost_reconnect_voltage
 #    address: 0x9009
 #    name: "Boost reconnect voltage"
@@ -681,7 +681,7 @@ sensor:
 #      - multiply: 0.01
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: low_voltage_reconnect
 #    address: 0x900A
 #    name: "Low voltage reconnect"
@@ -692,7 +692,7 @@ sensor:
 #      - multiply: 0.01
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: under_voltage_recover
 #    address: 0x900B
 #    name: "Under voltage recover"
@@ -703,7 +703,7 @@ sensor:
 #      - multiply: 0.01
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: under_voltage_warning
 #    address: 0x900C
 #    name: "Under voltage warning"
@@ -714,7 +714,7 @@ sensor:
 #      - multiply: 0.01
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: low_voltage_disconnect
 #    address: 0x900D
 #    name: "Low voltage disconnect"
@@ -725,7 +725,7 @@ sensor:
 #      - multiply: 0.01
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: discharging_limit_voltage
 #    address: 0x900E
 #    name: "Discharging limit voltage"
@@ -736,7 +736,7 @@ sensor:
 #      - multiply: 0.01
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: battery_temperature_warning_upper_limit
 #    address: 0x9017
 #    name: "Battery temperature warning upper limit"
@@ -749,7 +749,7 @@ sensor:
 #      - multiply: 0.01
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: battery_temperature_warning_lower_limit
 #    address: 0x9018
 #    name: "Battery temperature warning lower limit"
@@ -760,7 +760,7 @@ sensor:
 #      - multiply: 0.01
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: controller_inner_temperature_upper_limit
 #    address: 0x9019
 #    name: "Controller inner temperature upper limit"
@@ -771,7 +771,7 @@ sensor:
 #      - multiply: 0.01
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: controller_inner_temperature_upper_limit_recover
 #    address: 0x901A
 #    name: "Controller inner temperature upper limit recover"
@@ -782,7 +782,7 @@ sensor:
 #      - multiply: 0.01
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: power_component_temperature_upper_limit
 #    address: 0x901B
 #    name: "Power component temperature upper limit"
@@ -793,7 +793,7 @@ sensor:
 #      - multiply: 0.01
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: power_component_temperature_upper_limit_recover
 #    address: 0x901C
 #    name: "Power component temperature upper limit recover"
@@ -804,7 +804,7 @@ sensor:
 #      - multiply: 0.01
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: line_impedance
 #    address: 0x901D
 #    name: "Line Impedance"
@@ -815,7 +815,7 @@ sensor:
 #      - multiply: 0.01
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: dttv
 #    address: 0x901E
 #    name: "Day Time Threshold Voltage"
@@ -826,7 +826,7 @@ sensor:
 #      - multiply: 0.01
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: light_signal_startup_delay_time
 #    address: 0x901F
 #    name: "Light signal startup delay time"
@@ -837,7 +837,7 @@ sensor:
 #      - multiply: 0.01
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: nttv
 #    address: 0x9020
 #    name: "Light Time Threshold Voltage"
@@ -848,7 +848,7 @@ sensor:
 #      - multiply: 0.01
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: light_signal_close_delay_time
 #    address: 0x9021
 #    name: "Light signal close delay time"
@@ -859,7 +859,7 @@ sensor:
 #      - multiply: 0.01
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id:
 #      load_controlling_modes
 #      # 0000H Manual Control
@@ -874,7 +874,7 @@ sensor:
 #    skip_updates: 50
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: working_time_length_1
 #    # The length of load output timer1,
 #    # D15-D8,hour, D7-D0, minute
@@ -885,7 +885,7 @@ sensor:
 #    value_type: U_WORD
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: working_time_length_2
 #    address: 0x903F
 #    name: "Working_time length 1"
@@ -894,7 +894,7 @@ sensor:
 #    value_type: U_WORD
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: turn_on_timing_1_seconds
 #    address: 0x9042
 #    name: "Turn on timing 1 seconds"
@@ -904,7 +904,7 @@ sensor:
 #    skip_updates: 50
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: turn_on_timing_1_minutes
 #    address: 0x9043
 #    name: "Turn on timing 1 minutes"
@@ -913,7 +913,7 @@ sensor:
 #    value_type: U_WORD
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: turn_on_timing_1_hours
 #    address: 0x9044
 #    name: "Turn on timing 1 hours"
@@ -922,7 +922,7 @@ sensor:
 #    value_type: U_WORD
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: turn_off_timing_1_seconds
 #    address: 0x9045
 #    name: "Turn off timing 1 seconds"
@@ -931,7 +931,7 @@ sensor:
 #    value_type: U_WORD
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: turn_off_timing_1_minutes
 #    address: 0x9046
 #    name: "Turn off timing 1 minutes"
@@ -940,7 +940,7 @@ sensor:
 #    value_type: U_WORD
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: turn_off_timing_1_hours
 #    address: 0x9047
 #    name: "Turn off timing 1 hours"
@@ -949,7 +949,7 @@ sensor:
 #    value_type: U_WORD
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: turn_on_timing_2_seconds
 #    address: 0x9048
 #    name: "Turn on timing 2 seconds"
@@ -958,7 +958,7 @@ sensor:
 #    value_type: U_WORD
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: turn_on_timing_2_minutes
 #    address: 0x9049
 #    name: "Turn on timing 2 minutes"
@@ -967,7 +967,7 @@ sensor:
 #    value_type: U_WORD
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: turn_on_timing_2_hours
 #    address: 0x904A
 #    name: "Turn on timing 2 hours"
@@ -976,7 +976,7 @@ sensor:
 #    value_type: U_WORD
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: turn_off_timing_2_seconds
 #    address: 0x904B
 #    name: "Turn off timing 2 seconds"
@@ -985,7 +985,7 @@ sensor:
 #    value_type: U_WORD
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: turn_off_timing_2_minutes
 #    address: 0x904C
 #    name: "Turn off timing 2 minutes"
@@ -994,7 +994,7 @@ sensor:
 #    value_type: U_WORD
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: turn_off_timing_2_hours
 #    address: 0x904D
 #    name: "Turn off timing 2 hours"
@@ -1003,7 +1003,7 @@ sensor:
 #    value_type: U_WORD
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: backlight_time
 #    address: 0x9063
 #    name: "Backlight time"
@@ -1013,7 +1013,7 @@ sensor:
 #    value_type: U_WORD
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: length_of_night_minutes
 #    address: 0x9065
 #    internal: true
@@ -1024,7 +1024,7 @@ sensor:
 #    value_type: U_WORD
 
 #  - platform: modbus_controller
-#    modbus_controller_id: ${modbus_controller_id}
+#    modbus_controller_id: ${modbus_controller_name}
 #    id: length_of_night
 #    address: 0x9065
 #    bitmask: 0xFF00
@@ -1038,7 +1038,7 @@ sensor:
 
 binary_sensor:
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: battery_internal_resistance_abnormal
     name: "Battery internal resistance abnormal"
     register_type: read
@@ -1047,7 +1047,7 @@ binary_sensor:
   #    lambda: !lambda "{ return x ;}"
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: charging_input_volt_failure
     name: "Charging Input Volt Failure"
     register_type: read
@@ -1056,7 +1056,7 @@ binary_sensor:
 
 switch:
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: manual_control_load
     register_type: coil
     address: 2
@@ -1064,7 +1064,7 @@ switch:
     bitmask: 1
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: default_control_the_load
     register_type: coil
     address: 3
@@ -1072,7 +1072,7 @@ switch:
     bitmask: 1
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: enable_load_test
     register_type: coil
     address: 5
@@ -1080,7 +1080,7 @@ switch:
     bitmask: 1
 
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: force_load
     register_type: coil
     address: 6
@@ -1089,7 +1089,7 @@ switch:
 
 text_sensor:
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     name: "rtc_clock"
     id: rtc_clock
     internal: true
@@ -1130,9 +1130,10 @@ text_sensor:
               std::vector<uint16_t> rtc_data = {uint16_t((minutes << 8) | seconds), uint16_t((day << 8) | hour),
                                                 uint16_t((year << 8) | month)};
               // Create a modbus command item with the time information as the payload
-              esphome::modbus_controller::ModbusCommandItem set_rtc_command = esphome::modbus_controller::ModbusCommandItem::create_write_multiple_command(epever, 0x9013, 3, rtc_data);
+              esphome::modbus_controller::ModbusController *controller = id( ${modbus_controller_name});
+              esphome::modbus_controller::ModbusCommandItem set_rtc_command = esphome::modbus_controller::ModbusCommandItem::create_write_multiple_command(controller, 0x9013, 3, rtc_data);
               // Submit the command to the send queue
-              epever->queue_command(set_rtc_command);
+              controller->queue_command(set_rtc_command);
               ESP_LOGI("ModbusLambda", "EPSOLAR RTC set to %02d:%02d:%02d %02d.%02d.%04d", hour, minutes, seconds, day, month, year + 2000);
             }
             char buffer[20];
@@ -1146,7 +1147,7 @@ text_sensor:
 
 number:
   - platform: modbus_controller
-    modbus_controller_id: ${modbus_controller_id}
+    modbus_controller_id: ${modbus_controller_name}
     id: battery_capacity_number
     name: "Battery Cap Number"
     address: 0x9001
